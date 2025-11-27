@@ -1,0 +1,198 @@
+import { 
+  LayoutDashboard, 
+  Camera, 
+  Video, 
+  Car, 
+  AlertTriangle, 
+  FileText, 
+  AlertCircle, 
+  Cpu, 
+  FolderOpen, 
+  GitBranch, 
+  BarChart3, 
+  Settings,
+  Target,
+  Grid3x3,
+  CheckCircle,
+  Plane,
+  Radio,
+  Eye,
+  Database,
+  TrendingUp,
+  Users,
+  Activity
+} from 'lucide-react';
+
+interface SidebarProps {
+  activeScreen: string;
+  onNavigate: (screen: string) => void;
+  userRole: 'operator' | 'supervisor' | 'admin';
+}
+
+interface NavSection {
+  title: string;
+  items: Array<{
+    id: string;
+    label: string;
+    icon: any;
+    roles: string[];
+  }>;
+}
+
+export function Sidebar({ activeScreen, onNavigate, userRole }: SidebarProps) {
+  const navSections: NavSection[] = [
+    {
+      title: '',
+      items: [
+        { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, roles: ['operator', 'supervisor', 'admin'] },
+      ]
+    },
+    {
+      title: 'Surveillance Intelligence',
+      items: [
+        { id: 'surveillance-grid', label: 'Live Camera Grid', icon: Camera, roles: ['operator', 'supervisor', 'admin'] },
+        { id: 'cross-camera-tracking', label: 'Cross-Camera Tracking', icon: Target, roles: ['operator', 'supervisor', 'admin'] },
+        { id: 'multi-grid-viewer', label: 'Multi-Grid Viewer', icon: Grid3x3, roles: ['operator', 'supervisor', 'admin'] },
+      ]
+    },
+    {
+      title: 'Bodycam Monitoring',
+      items: [
+        { id: 'bodycam-grid', label: 'Bodycam Grid', icon: Video, roles: ['operator', 'supervisor', 'admin'] },
+      ]
+    },
+    {
+      title: 'ANPR Module',
+      items: [
+        { id: 'anpr-list', label: 'Violations List', icon: Car, roles: ['operator', 'supervisor', 'admin'] },
+        { id: 'anpr-approval-queue', label: 'Approval Queue', icon: CheckCircle, roles: ['supervisor', 'admin'] },
+      ]
+    },
+    {
+      title: 'Alerts & SOP',
+      items: [
+        { id: 'alerts', label: 'Anomaly Alerts', icon: AlertTriangle, roles: ['operator', 'supervisor', 'admin'] },
+        { id: 'sop', label: 'SOP Compliance', icon: FileText, roles: ['operator', 'supervisor', 'admin'] },
+      ]
+    },
+    {
+      title: 'Drone & Aerial Operations',
+      items: [
+        { id: 'drone-fleet', label: 'Drone Fleet Status', icon: Plane, roles: ['operator', 'supervisor', 'admin'] },
+        { id: 'drone-missions', label: 'Live Drone Missions', icon: Radio, roles: ['operator', 'supervisor', 'admin'] },
+        { id: 'drone-alerts', label: 'Drone Alerts', icon: AlertTriangle, roles: ['operator', 'supervisor', 'admin'] },
+      ]
+    },
+    {
+      title: 'Incident Management',
+      items: [
+        { id: 'incidents-list', label: 'Incident List', icon: AlertCircle, roles: ['operator', 'supervisor', 'admin'] },
+      ]
+    },
+    {
+      title: 'Detection Engine',
+      items: [
+        { id: 'detection-log', label: 'Detection Log', icon: Cpu, roles: ['supervisor', 'admin'] },
+        { id: 'bbox-verification', label: 'Bounding Box Verify', icon: Eye, roles: ['supervisor', 'admin'] },
+        { id: 'plate-verification', label: 'Plate Text Verify', icon: CheckCircle, roles: ['supervisor', 'admin'] },
+      ]
+    },
+    {
+      title: 'Evidence Console',
+      items: [
+        { id: 'evidence-timeline', label: 'Event Timeline', icon: FolderOpen, roles: ['supervisor', 'admin'] },
+        { id: 'evidence-sync', label: 'Multi-Source Sync', icon: Database, roles: ['supervisor', 'admin'] },
+      ]
+    },
+    {
+      title: 'Explainability & Audit',
+      items: [
+        { id: 'explainability-dag', label: 'DAG Trace Viewer', icon: GitBranch, roles: ['supervisor', 'admin'] },
+        { id: 'ai-decision-logs', label: 'AI Decision Logs', icon: Activity, roles: ['supervisor', 'admin'] },
+      ]
+    },
+    {
+      title: 'Analytics & Insights',
+      items: [
+        { id: 'analytics-home', label: 'Analytics Dashboard', icon: BarChart3, roles: ['operator', 'supervisor', 'admin'] },
+        { id: 'analytics-camera-health', label: 'Camera Health', icon: Camera, roles: ['supervisor', 'admin'] },
+        { id: 'analytics-violations', label: 'Violation Trends', icon: TrendingUp, roles: ['supervisor', 'admin'] },
+      ]
+    },
+    {
+      title: 'Administration',
+      items: [
+        { id: 'admin-cameras', label: 'Camera Registry', icon: Camera, roles: ['admin'] },
+        { id: 'admin-drones', label: 'Drone Registry', icon: Plane, roles: ['admin'] },
+        { id: 'admin-bodycams', label: 'Bodycam Registry', icon: Video, roles: ['admin'] },
+        { id: 'admin-users', label: 'User Management', icon: Users, roles: ['admin'] },
+        { id: 'admin-system', label: 'System Health', icon: Activity, roles: ['admin'] },
+        { id: 'admin-ai-models', label: 'AI Model Manager', icon: Cpu, roles: ['admin'] },
+      ]
+    }
+  ];
+
+  // Filter sections based on user role
+  const filteredSections = navSections
+    .map(section => ({
+      ...section,
+      items: section.items.filter(item => item.roles.includes(userRole))
+    }))
+    .filter(section => section.items.length > 0);
+
+  const getRoleTitle = () => {
+    switch(userRole) {
+      case 'operator': return 'Control Room Operator';
+      case 'supervisor': return 'Supervisor';
+      case 'admin': return 'System Administrator';
+    }
+  };
+
+  return (
+    <div className="w-64 bg-[#0d1117] border-r border-[#1f2937] flex flex-col">
+      <div className="p-6 border-b border-[#1f2937]">
+        <h1 className="text-cyan-400 tracking-wide">KAKINADA 360</h1>
+        <p className="text-[10px] text-gray-500 mt-1 tracking-widest uppercase">Command & Control</p>
+      </div>
+      <nav className="flex-1 overflow-y-auto py-4">
+        {filteredSections.map((section, sectionIndex) => (
+          <div key={section.title} className={sectionIndex > 0 ? 'mt-4' : ''}>
+            {section.title && (
+              <p className="text-xs text-gray-500 px-6 mb-2 uppercase tracking-wider">
+                {section.title}
+              </p>
+            )}
+            {section.items.map((item) => {
+              const Icon = item.icon;
+              const isActive = activeScreen.startsWith(item.id);
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => onNavigate(item.id)}
+                  className={`w-full flex items-center gap-3 px-6 py-3 transition-colors ${
+                    isActive
+                      ? 'bg-cyan-500/10 text-cyan-400 border-r-2 border-cyan-400'
+                      : 'text-gray-400 hover:text-white hover:bg-white/5'
+                  }`}
+                >
+                  <Icon className="w-5 h-5" />
+                  <span className="text-sm">{item.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        ))}
+      </nav>
+      <div className="p-4 border-t border-[#1f2937]">
+        <div className="mb-3 pb-3 border-b border-[#1f2937]">
+          <p className="text-xs text-gray-500">Logged in as:</p>
+          <p className="text-xs text-cyan-400 mt-0.5">{getRoleTitle()}</p>
+        </div>
+        <div className="text-[10px] text-gray-600 space-y-1">
+          <div>System Status: <span className="text-green-400">ONLINE</span></div>
+          <div>v2.1.3 • {new Date().toLocaleDateString()}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
