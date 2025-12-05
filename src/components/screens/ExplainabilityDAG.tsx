@@ -39,12 +39,6 @@ export function ExplainabilityDAG() {
         <button className="px-4 py-2 bg-cyan-500/10 text-cyan-400 rounded-lg hover:bg-cyan-500/20">
           Current Trace
         </button>
-        <button className="px-4 py-2 text-gray-400 hover:bg-white/5 rounded-lg">
-          Rule Library
-        </button>
-        <button className="px-4 py-2 text-gray-400 hover:bg-white/5 rounded-lg">
-          Model Performance
-        </button>
       </div>
 
       <div className="grid grid-cols-3 gap-6">

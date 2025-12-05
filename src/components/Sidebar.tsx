@@ -1,3 +1,4 @@
+// components/Sidebar.tsx
 import { 
   LayoutDashboard, 
   Camera, 
@@ -57,7 +58,7 @@ export function Sidebar({ activeScreen, onNavigate, userRole }: SidebarProps) {
       title: 'Surveillance Intelligence',
       items: [
         { id: 'surveillance-grid', label: 'Live Camera Grid', icon: Camera, roles: ['operator', 'supervisor', 'admin'] },
-        { id: 'cross-camera-tracking', label: 'Cross-Camera Tracking', icon: Target, roles: ['operator', 'supervisor', 'admin'] },
+        { id: 'multi-camera-tracking', label: 'Multi-Camera Tracking', icon: Target, roles: ['operator', 'supervisor', 'admin'] },
         { id: 'multi-grid-viewer', label: 'Multi-Grid Viewer', icon: Grid3x3, roles: ['operator', 'supervisor', 'admin'] },
       ]
     },
@@ -71,7 +72,7 @@ export function Sidebar({ activeScreen, onNavigate, userRole }: SidebarProps) {
       title: 'ANPR Module',
       items: [
         { id: 'anpr-list', label: 'Violations List', icon: Car, roles: ['operator', 'supervisor', 'admin'] },
-        { id: 'anpr-approval-queue', label: 'Approval Queue', icon: CheckCircle, roles: ['supervisor', 'admin'] },
+        { id: 'anpr-approval-queue', label: 'Approval Queue', icon: CheckCircle, roles: ['supervisor', 'operator'] },
       ]
     },
     {
@@ -95,14 +96,7 @@ export function Sidebar({ activeScreen, onNavigate, userRole }: SidebarProps) {
         { id: 'incidents-list', label: 'Incident List', icon: AlertCircle, roles: ['operator', 'supervisor', 'admin'] },
       ]
     },
-    {
-      title: 'Detection Engine',
-      items: [
-        { id: 'detection-log', label: 'Detection Log', icon: Cpu, roles: ['supervisor', 'admin'] },
-        { id: 'bbox-verification', label: 'Bounding Box Verify', icon: Eye, roles: ['supervisor', 'admin'] },
-        { id: 'plate-verification', label: 'Plate Text Verify', icon: CheckCircle, roles: ['supervisor', 'admin'] },
-      ]
-    },
+    // Detection Engine removed completely
     {
       title: 'Evidence Console',
       items: [
@@ -113,8 +107,12 @@ export function Sidebar({ activeScreen, onNavigate, userRole }: SidebarProps) {
     {
       title: 'Explainability & Audit',
       items: [
+        // keep DAG
         { id: 'explainability-dag', label: 'DAG Trace Viewer', icon: GitBranch, roles: ['supervisor', 'admin'] },
-        { id: 'ai-decision-logs', label: 'AI Decision Logs', icon: Activity, roles: ['supervisor', 'admin'] },
+        // add the two new AI pages here
+        { id: 'ai-detection-log', label: 'AI Detection Log', icon: Cpu, roles: ['supervisor', 'admin'] },
+        { id: 'ai-performance-scoring', label: 'AI Performance Scoring', icon: Activity, roles: ['supervisor', 'admin'] },
+        // removed ai-decision-logs entry
       ]
     },
     {
@@ -123,6 +121,7 @@ export function Sidebar({ activeScreen, onNavigate, userRole }: SidebarProps) {
         { id: 'analytics-home', label: 'Analytics Dashboard', icon: BarChart3, roles: ['operator', 'supervisor', 'admin'] },
         { id: 'analytics-camera-health', label: 'Camera Health', icon: Camera, roles: ['supervisor', 'admin'] },
         { id: 'analytics-violations', label: 'Violation Trends', icon: TrendingUp, roles: ['supervisor', 'admin'] },
+        { id: 'analytics-more', label: 'More Analytics', icon: BarChart3, roles: ['supervisor', 'admin'] },
       ]
     },
     {
@@ -198,7 +197,7 @@ export function Sidebar({ activeScreen, onNavigate, userRole }: SidebarProps) {
 
     <nav className="flex-1 overflow-y-auto py-4">
         {filteredSections.map((section, sectionIndex) => (
-          <div key={section.title} className={sectionIndex > 0 ? 'mt-4' : ''}>
+          <div key={section.title + sectionIndex} className={sectionIndex > 0 ? 'mt-4' : ''}>
             {section.title && (
               <p className="text-xs text-gray-500 px-6 mb-2 uppercase tracking-wider">
                 {section.title}

@@ -45,7 +45,7 @@ export function TopBar({
     const titles: Record<string, string> = {
       dashboard: 'Command Dashboard',
       'surveillance-grid': 'Live Surveillance',
-      'cross-camera-tracking': 'Cross-Camera Tracking',
+      'multi-camera-tracking': 'Multi-Camera Tracking',
       'surveillance-multigrid-2x2': 'Multi-Grid View (2×2)',
       'surveillance-multigrid-3x3': 'Multi-Grid View (3×3)',
       'surveillance-multigrid-4x4': 'Multi-Grid View (4×4)',
@@ -59,16 +59,23 @@ export function TopBar({
       sop: 'SOP Compliance',
       'incidents-list': 'Incident Management',
       'incident-detail': 'Incident Detail',
-      'detection-log': 'Detection Log',
+
+      // if you previously had 'detection-log' here, replace/augment with
+      'ai-detection-log': 'AI Detection Log',
+      'ai-performance-scoring': 'AI Performance Scoring',
+
+      // keep bounding box / plate titles intact if you still use them
       'detection-boundingbox': 'Bounding Box Review',
       'plate-correction': 'Plate Text Correction',
+
       'evidence-timeline': 'Evidence Timeline',
       'evidence-sync': 'Multi-Camera Sync',
       'explainability-dag': 'AI Decision Trace',
-      'explainability-logs': 'AI Decision Logs',
+      // removed ai-decision-logs mapping (we no longer show it)
       'analytics-home': 'Analytics Dashboard',
       'analytics-camera-health': 'Camera Health Analytics',
       'analytics-violations': 'Violation Trends',
+      'analytics-more': 'More Analytics',
       'admin-cameras': 'Camera Registry',
       'admin-users': 'User Management',
       'admin-system': 'System Health',

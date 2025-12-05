@@ -1,6 +1,6 @@
 import { MapPin, Target, Camera, Clock, AlertTriangle, Zap, ChevronRight } from 'lucide-react';
 
-export function CrossCameraTracking() {
+export function MultiCameraTracking() {
   const targetInfo = {
     type: 'Vehicle',
     plateNumber: 'AP 39 AB 1234',

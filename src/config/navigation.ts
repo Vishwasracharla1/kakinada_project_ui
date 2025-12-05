@@ -90,8 +90,7 @@ export const navigationConfig: NavItem[] = [
     path: '/detection',
     roles: ['supervisor', 'admin'],
     children: [
-      { id: 'log', label: 'Detection Log', icon: Activity, path: '/detection/log', roles: ['supervisor', 'admin'] },
-      { id: 'verify', label: 'Verify', icon: CheckCircle, path: '/detection/verify', roles: ['supervisor', 'admin'] }
+      { id: 'log', label: 'Detection Log', icon: Activity, path: '/detection/log', roles: ['supervisor'] },
     ]
   },
   {

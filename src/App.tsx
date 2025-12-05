@@ -1,3 +1,4 @@
+// api.tsx (updated)
 import { useState } from 'react';
 import { LoginPage } from './components/LoginPage';
 import { Sidebar } from './components/Sidebar';
@@ -17,8 +18,7 @@ import { Alerts } from './components/screens/Alerts';
 import { SOPCompliance } from './components/screens/SOPCompliance';
 import { IncidentsList } from './components/screens/IncidentsList';
 import { IncidentDetail } from './components/screens/IncidentDetail';
-import { DetectionLog } from './components/screens/DetectionLog';
-import { BoundingBox } from './components/screens/BoundingBox';
+import { AIDetectionLog } from './components/screens/AIDetectionLog';
 import { PlateCorrection } from './components/screens/PlateCorrection';
 import { EvidenceTimeline } from './components/screens/EvidenceTimeline';
 import { EvidenceSync } from './components/screens/EvidenceSync';
@@ -29,7 +29,7 @@ import { CameraHealth } from './components/screens/CameraHealth';
 import { ViolationTrends } from './components/screens/ViolationTrends';
 import { CameraRegistry } from './components/screens/CameraRegistry';
 import { UserManagement } from './components/screens/UserManagement';
-import { CrossCameraTracking } from './components/screens/CrossCameraTracking';
+import { MultiCameraTracking } from './components/screens/MultiCameraTracking';
 import { DroneFleet } from './components/screens/DroneFleet';
 import { DroneMissions } from './components/screens/DroneMissions';
 import { DroneAlerts } from './components/screens/DroneAlerts';
@@ -37,6 +37,9 @@ import { DroneRegistry } from './components/screens/DroneRegistry';
 import { BodycamRegistry } from './components/screens/BodycamRegistry';
 import { SystemHealth } from './components/screens/SystemHealth';
 import { AIModelManager } from './components/screens/AIModelManager';
+import { AnalyticsZoneHotspots } from './components/screens/AnalyticsMore';
+// added AIPerformanceScoring import (new file)
+import { AIPerformanceScoring } from './components/screens/AIPerformanceScoring';
 
 // NEW — user type
 interface UserSession {
@@ -103,12 +106,11 @@ export default function App() {
 
       case 'incident-detail':
         return <IncidentDetail onBack={() => setActiveScreen('incidents-list')} />;
+case 'ai-detection-log':
+  return <AIDetectionLog onBack={() => setActiveScreen('dashboard')} onNavigate={setActiveScreen} />;
 
-      case 'detection-log':
-        return <DetectionLog onViewBoundingBox={() => setActiveScreen('detection-boundingbox')} onViewCorrection={() => setActiveScreen('plate-correction')} />;
-
-      case 'detection-boundingbox':
-        return <BoundingBox onBack={() => setActiveScreen('detection-log')} />;
+case 'ai-performance-scoring':
+  return <AIPerformanceScoring onBack={() => setActiveScreen('ai-detection-log')} />;
 
       case 'plate-correction':
         return <PlateCorrection onBack={() => setActiveScreen('detection-log')} />;
@@ -133,16 +135,15 @@ export default function App() {
 
       case 'analytics-violations':
         return <ViolationTrends onBack={() => setActiveScreen('analytics-home')} />;
-
+      case 'analytics-more':
+        return <AnalyticsZoneHotspots onBack={() => setActiveScreen('analytics-home')} />;
       case 'admin-cameras':
         return <CameraRegistry />;
 
       case 'admin-users':
         return <UserManagement />;
-
-      case 'cross-camera-tracking':
-        return <CrossCameraTracking />;
-
+      case 'multi-camera-tracking':
+        return <MultiCameraTracking />;
       case 'drone-fleet':
         return <DroneFleet onNavigate={setActiveScreen} />;
 
@@ -166,6 +167,16 @@ export default function App() {
 
       case 'multi-grid-viewer':
         return <MultiGrid size={gridSize} />;
+      case 'anpr-approval-queue':
+        return <ANPRApproval onBack={() => setActiveScreen('anpr-list')} />;
+      case 'plate-verification':
+        return <PlateCorrection onBack={() => setActiveScreen('detection-log')} />;
+      case 'ai-decision-logs':
+        return <ExplainabilityLogs />;
+
+      // --- NEW: route for AI Performance Scoring ---
+      case 'ai-performance-scoring':
+        return <AIPerformanceScoring onBack={() => setActiveScreen('detection-log')} />;
 
       default:
         return <Dashboard userRole={user!.role} />;
