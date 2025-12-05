@@ -22,6 +22,12 @@ import {
   Users,
   Activity
 } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import {  Clock } from 'lucide-react';
+
+import apPoliceLogo from "../assets/ap-police-logo.png";
+
+
 
 interface SidebarProps {
   activeScreen: string;
@@ -147,14 +153,50 @@ export function Sidebar({ activeScreen, onNavigate, userRole }: SidebarProps) {
       case 'admin': return 'System Administrator';
     }
   };
+   const [currentTime, setCurrentTime] = useState(new Date());
+   useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
 
   return (
     <div className="w-64 bg-[#0d1117] border-r border-[#1f2937] flex flex-col">
       <div className="p-6 border-b border-[#1f2937]">
-        <h1 className="text-cyan-400 tracking-wide">KAKINADA 360</h1>
+        
+        <div className="flex items-center gap-2">
+  <img 
+    src={apPoliceLogo} 
+    alt="AP Police Logo" 
+    className="w-12 h-13 object-contain"
+  />
+  <h1 className="text-cyan-400 tracking-wide">KAKINADA POLICE</h1>
+</div>
+
         <p className="text-[10px] text-gray-500 mt-1 tracking-widest uppercase">Command & Control</p>
+  
+         <div className="flex items-center gap-2 text-slate-400">
+            <Clock className="w-4 h-4" />
+            <span className="text-sm">
+              {currentTime.toLocaleTimeString('en-IN', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false 
+              })} IST
+            </span>
+            <div className="text-slate-200">|</div>
+            <div className="text-sm text-slate-400">
+            {currentTime.toLocaleDateString('en-IN', { 
+              day: '2-digit',
+              month: 'short',
+              year: 'numeric'
+            })}
+          </div>
+          </div>      
       </div>
-      <nav className="flex-1 overflow-y-auto py-4">
+
+    <nav className="flex-1 overflow-y-auto py-4">
         {filteredSections.map((section, sectionIndex) => (
           <div key={section.title} className={sectionIndex > 0 ? 'mt-4' : ''}>
             {section.title && (
